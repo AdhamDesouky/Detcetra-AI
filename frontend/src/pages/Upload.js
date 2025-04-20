@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
+import React, { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 import {
   Box,
   Typography,
@@ -16,22 +16,22 @@ import {
   ListItemSecondaryAction,
   TextField,
   Alert,
-} from '@mui/material';
+} from "@mui/material";
 import {
   CloudUpload as UploadIcon,
   Delete as DeleteIcon,
   CheckCircle as SuccessIcon,
   Error as ErrorIcon,
-} from '@mui/icons-material';
+} from "@mui/icons-material";
 
 const Upload = () => {
   const [files, setFiles] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [patientId, setPatientId] = useState('');
-  const [accessionNumber, setAccessionNumber] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [patientId, setPatientId] = useState("");
+  const [accessionNumber, setAccessionNumber] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const onDrop = useCallback((acceptedFiles) => {
     setFiles((prevFiles) => [
@@ -39,8 +39,8 @@ const Upload = () => {
       ...acceptedFiles.map((file) => ({
         file,
         name: file.name,
-        type: file.name.toLowerCase().endsWith('.pdf') ? 'PDF' : 'DICOM',
-        status: 'pending',
+        type: file.name.toLowerCase().endsWith(".pdf") ? "PDF" : "DICOM",
+        status: "pending",
       })),
     ]);
   }, []);
@@ -48,8 +48,8 @@ const Upload = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'application/dicom': ['.dcm'],
-      'application/pdf': ['.pdf'],
+      "application/dicom": [".dcm"],
+      "application/pdf": [".pdf"],
     },
   });
 
@@ -59,16 +59,16 @@ const Upload = () => {
 
   const handleUpload = async () => {
     if (!patientId || !accessionNumber) {
-      setError('Please fill in both Patient ID and Accession Number');
+      setError("Please fill in both Patient ID and Accession Number");
       return;
     }
 
     if (files.length === 0) {
-      setError('Please add files to upload');
+      setError("Please add files to upload");
       return;
     }
 
-    setError('');
+    setError("");
     setUploading(true);
     setProgress(0);
 
@@ -80,13 +80,13 @@ const Upload = () => {
       }
 
       // Add your actual upload logic here
-      
-      setSuccess('Files uploaded successfully!');
+
+      setSuccess("Files uploaded successfully!");
       setFiles([]);
-      setPatientId('');
-      setAccessionNumber('');
+      setPatientId("");
+      setAccessionNumber("");
     } catch (err) {
-      setError('Error uploading files. Please try again.');
+      setError("Error uploading files. Please try again.");
     } finally {
       setUploading(false);
       setProgress(0);
@@ -104,31 +104,28 @@ const Upload = () => {
           {/* Upload Area */}
           <Card sx={{ mb: 3 }}>
             <CardContent>
-              <Box
-                {...getRootProps()}
-                sx={{
-                  border: '2px dashed',
-                  borderColor: isDragActive ? 'primary.main' : 'divider',
-                  borderRadius: 2,
-                  p: 3,
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                  bgcolor: isDragActive ? 'action.hover' : 'background.paper',
-                  transition: 'all 0.2s ease',
-                }}
-              >
-                <input {...getInputProps()} />
-                <UploadIcon sx={{ fontSize: 48, color: 'primary.main', mb: 2 }} />
-                <Typography variant="h6" gutterBottom>
-                  Drag & Drop Files Here
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  or click to select files
-                </Typography>
-                <Typography variant="caption" display="block" sx={{ mt: 1 }}>
-                  Supported formats: DICOM (.dcm), PDF
-                </Typography>
-              </Box>
+              <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
+                <div {...getRootProps()} style={dropzoneStyle}>
+                  <input {...getInputProps()} />
+                  {isDragActive ? (
+                    <p>Drop the DICOM files here...</p>
+                  ) : (
+                    <p>Drag 'n' drop DICOM files, or click to select</p>
+                  )}
+                  {status === "success" && <SuccessIcon color="success" />}
+                  {status === "error" && <ErrorIcon color="error" />}
+                </div>
+              </Paper>
+              <UploadIcon sx={{ fontSize: 48, color: "primary.main", mb: 2 }} />
+              <Typography variant="h6" gutterBottom>
+                Drag & Drop Files Here
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                or click to select files
+              </Typography>
+              <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+                Supported formats: DICOM (.dcm), PDF
+              </Typography>
             </CardContent>
           </Card>
 
@@ -204,7 +201,12 @@ const Upload = () => {
               {uploading && (
                 <Box sx={{ mt: 2 }}>
                   <LinearProgress variant="determinate" value={progress} />
-                  <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 1 }}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    align="center"
+                    sx={{ mt: 1 }}
+                  >
                     Uploading... {progress}%
                   </Typography>
                 </Box>
@@ -217,7 +219,7 @@ const Upload = () => {
                 disabled={uploading || files.length === 0}
                 sx={{ mt: 3 }}
               >
-                {uploading ? 'Uploading...' : 'Upload Files'}
+                {uploading ? "Uploading..." : "Upload Files"}
               </Button>
             </CardContent>
           </Card>
@@ -227,4 +229,4 @@ const Upload = () => {
   );
 };
 
-export default Upload; 
+export default Upload;

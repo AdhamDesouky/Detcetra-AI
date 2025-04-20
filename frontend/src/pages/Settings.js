@@ -58,6 +58,10 @@ const Settings = ({ showToast }) => {
     // Add your save profile logic here
     setEditMode(false);
     showToast('Profile updated successfully', 'success');
+    const handleSave = () => {
+      // Save logic
+      navigate('/dashboard');
+    };
   };
 
   const handleCancelEdit = () => {
@@ -225,4 +229,4 @@ const Settings = ({ showToast }) => {
   );
 };
 
-export default Settings; 
+export default Settings;

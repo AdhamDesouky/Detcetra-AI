@@ -105,15 +105,26 @@ const Upload = () => {
           <Card sx={{ mb: 3 }}>
             <CardContent>
               <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
-                <div {...getRootProps()} style={dropzoneStyle}>
+                <div
+                  {...getRootProps()}
+                  sx={{
+                    p: 4,
+                    border: "2px dashed",
+                    borderColor: "primary.main",
+                    borderRadius: 2,
+                    textAlign: "center",
+                    cursor: "pointer",
+                    "&:hover": { borderColor: "primary.dark" },
+                  }}
+                >
                   <input {...getInputProps()} />
                   {isDragActive ? (
                     <p>Drop the DICOM files here...</p>
                   ) : (
                     <p>Drag 'n' drop DICOM files, or click to select</p>
                   )}
-                  {status === "success" && <SuccessIcon color="success" />}
-                  {status === "error" && <ErrorIcon color="error" />}
+                  {success && <SuccessIcon color="success" />}
+                  {error && <ErrorIcon color="error" />}
                 </div>
               </Paper>
               <UploadIcon sx={{ fontSize: 48, color: "primary.main", mb: 2 }} />

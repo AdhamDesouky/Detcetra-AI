@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Box,
@@ -7,36 +7,35 @@ import {
   TextField,
   Button,
   Paper,
-  Alert,
   Link,
   CircularProgress,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Lock as LockIcon } from '@mui/icons-material';
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { Lock as LockIcon } from "@mui/icons-material";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   marginTop: theme.spacing(8),
   padding: theme.spacing(4),
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  background: 'linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%)',
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  background: "linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%)",
   borderRadius: 16,
-  boxShadow: '0 8px 32px rgba(0, 0, 0, 0.2)',
+  boxShadow: "0 8px 32px rgba(0, 0, 0, 0.2)",
 }));
 
 const StyledAvatar = styled(Box)(({ theme }) => ({
   margin: theme.spacing(1),
   backgroundColor: theme.palette.primary.main,
   padding: theme.spacing(2),
-  borderRadius: '50%',
+  borderRadius: "50%",
 }));
 
 const Login = ({ showToast }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -44,14 +43,14 @@ const Login = ({ showToast }) => {
   const validateForm = () => {
     const newErrors = {};
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
+      newErrors.email = "Email is invalid";
     }
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = "Password must be at least 6 characters";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -67,14 +66,14 @@ const Login = ({ showToast }) => {
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
-        [name]: '',
+        [name]: "",
       }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
@@ -82,14 +81,14 @@ const Login = ({ showToast }) => {
     setLoading(true);
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       // Add your authentication logic here
-      localStorage.setItem('authToken', 'dummy-token');
-      showToast('Login successful', 'success');
-      navigate('/dashboard');
+      localStorage.setItem("authToken", "dummy-token");
+      showToast("Login successful", "success");
+      navigate("/dashboard");
     } catch (err) {
-      showToast('Invalid email or password', 'error');
+      showToast("Invalid email or password", "error");
     } finally {
       setLoading(false);
     }
@@ -97,7 +96,7 @@ const Login = ({ showToast }) => {
 
   const handleForgotPassword = () => {
     // Add your forgot password logic here
-    showToast('Password reset link sent to your email', 'info');
+    showToast("Password reset link sent to your email", "info");
   };
 
   return (
@@ -109,7 +108,7 @@ const Login = ({ showToast }) => {
         <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
           Sign in to Detcetra
         </Typography>
-        <Box component="form" onSubmit={handleSubmit} sx={{ width: '100%' }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ width: "100%" }}>
           <TextField
             margin="normal"
             required
@@ -152,15 +151,15 @@ const Login = ({ showToast }) => {
             {loading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              'Sign In'
+              "Sign In"
             )}
           </Button>
-          <Box sx={{ textAlign: 'center' }}>
+          <Box sx={{ textAlign: "center" }}>
             <Link
               component="button"
               variant="body2"
               onClick={handleForgotPassword}
-              sx={{ cursor: 'pointer' }}
+              sx={{ cursor: "pointer" }}
             >
               Forgot password?
             </Link>
@@ -171,4 +170,4 @@ const Login = ({ showToast }) => {
   );
 };
 
-export default Login; 
+export default Login;
